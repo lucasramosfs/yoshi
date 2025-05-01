@@ -21,11 +21,16 @@
     }
     img {
       max-width: 100%;
+      max-height: 250px;
+      object-fit: cover;
       border-radius: 10px;
+      display: block;
+      margin: 0 auto 10px auto;
     }
     h1 {
       text-align: center;
       color: #444;
+      font-size: 1.8rem;
     }
     .tutores {
       margin: 10px 0;
@@ -40,32 +45,48 @@
     }
     input, textarea {
       width: 100%;
-      padding: 8px;
+      padding: 10px;
       margin-top: 4px;
       border-radius: 5px;
       border: 1px solid #ccc;
+      font-size: 1rem;
     }
     button {
       margin-top: 15px;
-      padding: 10px;
+      padding: 12px;
       width: 100%;
       background-color: #4CAF50;
       color: white;
       border: none;
       border-radius: 5px;
-      font-size: 1rem;
+      font-size: 1.1rem;
+      cursor: pointer;
+    }
+    button:hover {
+      background-color: #45a049;
     }
     .whatsapp {
-      margin-top: 15px;
+      margin-top: 20px;
       text-align: center;
     }
     .whatsapp a {
       text-decoration: none;
       color: white;
       background: #25D366;
-      padding: 10px 20px;
+      padding: 12px 20px;
       border-radius: 5px;
       display: inline-block;
+      font-size: 1rem;
+    }
+
+    /* Responsividade extra */
+    @media (max-width: 500px) {
+      h1 {
+        font-size: 1.5rem;
+      }
+      .container {
+        padding: 15px;
+      }
     }
   </style>
 </head>
@@ -75,28 +96,28 @@
     <h1>Oi! Eu sou o <strong>Yoshi</strong> 🐾</h1>
     <p class="tutores">
       Meus tutores são: <strong>Lucas e Vitória</strong><br>
-      Telefones: <a href="https://wa.me/5511971359990" target="_blank">(11) 9 7135-9990 </a> <a href="https://wa.me/5511995175534" target="_blank">(11) 9 9517-5534</a>
+      Telefones: 
+      <a href="https://wa.me/5511971359990" target="_blank">(11) 9 7135-9990</a> e 
+      <a href="https://wa.me/5511995175534" target="_blank">(11) 9 9517-5534</a>
     </p>
     <p><em>Que bom que me encontrou! Obrigado por cuidar de mim até eu voltar pra casa 🏠💚</em></p>
 
     <form id="encontrou-form" action="https://formsubmit.co/lucasramosfs@outlook.com.br" method="POST">
-        <label for="nome">Seu nome:</label>
-        <input type="text" id="nome" name="nome" required>
-      
-        <label for="telefone">Seu telefone:</label>
-        <input type="tel" id="telefone" name="telefone" required>
-      
-        <label for="comentario">Comentário:</label>
-        <textarea id="comentario" name="comentario" rows="3"></textarea>
-      
-        <input type="hidden" id="localizacao" name="localizacao">
-        
-        <!-- FormSubmit config: redirecionar para o próprio site e não mostrar captcha -->
-        <input type="hidden" name="_captcha" value="false">
-        <!-- <input type="hidden" name="_next" value="http://localhost:8000"> -->
-      
-        <button type="submit">Enviar informações</button>
-      </form>
+      <label for="nome">Seu nome:</label>
+      <input type="text" id="nome" name="nome" required>
+    
+      <label for="telefone">Seu telefone:</label>
+      <input type="tel" id="telefone" name="telefone" required>
+    
+      <label for="comentario">Comentário:</label>
+      <textarea id="comentario" name="comentario" rows="3"></textarea>
+    
+      <input type="hidden" id="localizacao" name="localizacao">
+    
+      <input type="hidden" name="_captcha" value="false">
+    
+      <button type="submit">Enviar informações</button>
+    </form>
 
     <div class="whatsapp">
       <a href="https://wa.me/5511971359990" target="_blank">📱 Falar com os tutores pelo WhatsApp</a>
@@ -108,41 +129,36 @@
       const form = document.getElementById("encontrou-form");
   
       form.addEventListener("submit", function (event) {
-        event.preventDefault(); // impede envio automático
+        event.preventDefault();
   
         const nome = document.getElementById("nome").value;
         const tel = document.getElementById("telefone").value;
         const comentario = document.getElementById("comentario").value;
-        const numero = "5511971359990"; // seu número do WhatsApp aqui
+        const numero = "5511971359990";
   
-        // Primeiro pega a localização
         if (navigator.geolocation) {
           navigator.geolocation.getCurrentPosition(function (position) {
             const latitude = position.coords.latitude;
             const longitude = position.coords.longitude;
             const mapsLink = `https://www.google.com/maps?q=${latitude},${longitude}`;
   
-            // Preenche o campo oculto com o link do maps
             document.getElementById("localizacao").value = mapsLink;
   
-            // Monta a mensagem do WhatsApp
             const mensagem = encodeURIComponent(
-                `Olá! Encontrei o Yoshi 🐱\n\n` +
-                `👤 Meu nome: ${nome}\n📱 Meu telefone: ${tel}\n💬 Comentário: ${comentario}\n\n` +
-                `📍 Localização:\n${mapsLink}`
+              `Olá! Encontrei o Yoshi 🐱\n\n` +
+              `👤 Meu nome: ${nome}\n📱 Meu telefone: ${tel}\n💬 Comentário: ${comentario}\n\n` +
+              `📍 Localização:\n${mapsLink}`
             );
   
-            // Envia o formulário
             form.submit();
   
-            // Abre o WhatsApp em nova aba
             setTimeout(() => {
               window.open(`https://wa.me/${numero}?text=${mensagem}`, "_blank");
             }, 500);
   
           }, function (error) {
             alert("Erro ao obter localização: " + error.message);
-            form.submit(); // ainda envia mesmo sem localização
+            form.submit();
           });
         } else {
           alert("Seu navegador não suporta geolocalização.");
