@@ -149,9 +149,10 @@
             form.submit();
   
             // Abre o WhatsApp em nova aba
-            setTimeout(() => {
-              window.open(`https://wa.me/${numero}?text=${mensagem}`, "_blank");
-            }, 500);
+            // setTimeout(() => {
+            //   window.open(`https://wa.me/${numero}?text=${mensagem}`, "_blank");
+            // }, 500);
+            window.location.href = `https://wa.me/${numero}?text=${mensagem}`;
   
           }, function (error) {
             alert("Erro ao obter localização: " + error.message);
