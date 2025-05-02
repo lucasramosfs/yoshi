@@ -32,26 +32,40 @@
       font-size: 1rem;
     }
     form {
-      margin-top: 20px;
+      margin: 20px auto;           /* Centraliza o formulário na página */
+      padding: 20px;               /* Espaço interno */
+      /* border: 1px solid red;       Borda de debug */
+      max-width: 100%;            /* Largura máxima */
+      background-color: #fefefe;   /* Cor de fundo clara */
+      border-radius: 8px;
+      box-sizing: border-box;
     }
+
     label {
       display: block;
       margin-top: 10px;
+      margin-bottom: 5px;
+      /* border: 1px solid red;       Debug */
+      font-weight: bold;
     }
+
     input, textarea {
       width: 100%;
-      padding: 8px 0 8px 5px;
+      padding: 8px 5px;
       margin-top: 4px;
       border-radius: 5px;
-      border: 1px solid #ccc;
+      /* border: 3px solid red;       Debug */
+      box-sizing: border-box;      /* Impede que padding extrapole largura */
+      font-size: 1rem;
     }
+
     button {
       margin-top: 15px;
       padding: 10px;
       width: 100%;
       background-color: #4CAF50;
       color: white;
-      border: none;
+      /* border: 1px solid red;       Debug */
       border-radius: 5px;
       font-size: 1rem;
       cursor: pointer;
