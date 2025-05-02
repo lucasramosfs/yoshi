@@ -32,40 +32,26 @@
       font-size: 1rem;
     }
     form {
-      margin: 20px auto;           /* Centraliza o formulário na página */
-      padding: 20px;               /* Espaço interno */
-      /* border: 1px solid red;       Borda de debug */
-      max-width: 100%;            /* Largura máxima */
-      background-color: #fefefe;   /* Cor de fundo clara */
-      border-radius: 8px;
-      box-sizing: border-box;
+      margin-top: 20px;
     }
-
     label {
       display: block;
       margin-top: 10px;
-      margin-bottom: 5px;
-      /* border: 1px solid red;       Debug */
-      font-weight: bold;
     }
-
     input, textarea {
       width: 100%;
-      padding: 8px 5px;
+      padding: 8px 0 8px 5px;
       margin-top: 4px;
       border-radius: 5px;
-      /* border: 3px solid red;       Debug */
-      box-sizing: border-box;      /* Impede que padding extrapole largura */
-      font-size: 1rem;
+      border: 1px solid #ccc;
     }
-
     button {
       margin-top: 15px;
       padding: 10px;
       width: 100%;
       background-color: #4CAF50;
       color: white;
-      /* border: 1px solid red;       Debug */
+      border: none;
       border-radius: 5px;
       font-size: 1rem;
       cursor: pointer;
@@ -93,34 +79,6 @@
       text-decoration: underline;
       font-weight: bold;
     }
-
-    /* Véu de carregamento */
-    #loading-overlay {
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      background-color: rgba(255, 255, 255, 0.8);
-      z-index: 9999;
-      display: none;
-      align-items: center;
-      justify-content: center;
-    }
-
-    .spinner {
-      border: 8px solid #f3f3f3;
-      border-top: 8px solid #4CAF50;
-      border-radius: 50%;
-      width: 60px;
-      height: 60px;
-      animation: spin 1s linear infinite;
-    }
-
-    @keyframes spin {
-      0% { transform: rotate(0deg); }
-      100% { transform: rotate(360deg); }
-    }
   </style>
 </head>
 <body>
@@ -132,67 +90,74 @@
       Meus tutores são: <strong>Lucas e Vitória</strong><br>
       Telefones: <a href="https://wa.me/5511971359990" target="_blank">(11) 9 7135-9990 </a> e <a href="https://wa.me/5511995175534" target="_blank">(11) 9 9517-5534</a>
     </p>
+    
 
     <form id="encontrou-form" action="https://formsubmit.co/lucasramosfs@outlook.com.br" method="POST" target="hidden_iframe">
-      <label for="nome">Seu nome:</label>
-      <input type="text" id="nome" name="nome" required>
-
-      <label for="telefone">Seu telefone:</label>
-      <input type="tel" id="telefone" name="telefone" required>
-
-      <label for="comentario">Comentário:</label>
-      <textarea id="comentario" name="comentario" rows="3"></textarea>
-
-      <input type="hidden" id="localizacao" name="localizacao">
-      <input type="hidden" name="_captcha" value="false">
-
-      <button type="submit">Enviar informações</button>
-    </form>
-    <iframe name="hidden_iframe" style="display:none;"></iframe>
+        <label for="nome">Seu nome:</label>
+        <input type="text" id="nome" name="nome" required>
+      
+        <label for="telefone">Seu telefone:</label>
+        <input type="tel" id="telefone" name="telefone" required>
+      
+        <label for="comentario">Comentário:</label>
+        <textarea id="comentario" name="comentario" rows="3"></textarea>
+      
+        <input type="hidden" id="localizacao" name="localizacao">
+        
+        <!-- FormSubmit config: redirecionar para o próprio site e não mostrar captcha -->
+        <input type="hidden" name="_captcha" value="false">
+        <!-- <input type="hidden" name="_next" value="http://localhost:8000"> -->
+      
+        <button type="submit">Enviar informações</button>
+      </form>
+      <iframe name="hidden_iframe" style="display:none;"></iframe>
 
     <div class="whatsapp">
       <a href="https://wa.me/5511971359990" target="_blank">📱 Falar com os tutores pelo WhatsApp</a>
     </div>
   </div>
 
-  <!-- Véu de carregamento -->
-  <div id="loading-overlay">
-    <div class="spinner"></div>
-  </div>
-
   <script>
     document.addEventListener("DOMContentLoaded", function () {
       const form = document.getElementById("encontrou-form");
-
+  
       form.addEventListener("submit", function (event) {
-        event.preventDefault();
-
-        document.getElementById("loading-overlay").style.display = "flex";
-
+        event.preventDefault(); // impede envio automático
+  
         const nome = document.getElementById("nome").value;
         const tel = document.getElementById("telefone").value;
         const comentario = document.getElementById("comentario").value;
-        const numero = "5511971359990";
-
+        const numero = "5511971359990"; // seu número do WhatsApp aqui
+  
+        // Primeiro pega a localização
         if (navigator.geolocation) {
           navigator.geolocation.getCurrentPosition(function (position) {
             const latitude = position.coords.latitude;
             const longitude = position.coords.longitude;
             const mapsLink = `https://www.google.com/maps?q=${latitude},${longitude}`;
+  
+            // Preenche o campo oculto com o link do maps
             document.getElementById("localizacao").value = mapsLink;
-
+  
+            // Monta a mensagem do WhatsApp
             const mensagem = encodeURIComponent(
-              `Olá! Encontrei o Yoshi \n\n` +
-              `Meu nome: ${nome}\nMeu telefone: ${tel}\nComentário: ${comentario}\n\n` +
-              `Localização:\n${mapsLink}`
+                `Olá! Encontrei o Yoshi \n\n` +
+                `Meu nome: ${nome}\nMeu telefone: ${tel}\nComentário: ${comentario}\n\n` +
+                `Localização:\n${mapsLink}`
             );
-
+  
+            // Envia o formulário
             form.submit();
+  
+            // Abre o WhatsApp em nova aba
+            // setTimeout(() => {
+            //   window.open(`https://wa.me/${numero}?text=${mensagem}`, "_blank");
+            // }, 500);
             window.location.href = `https://wa.me/${numero}?text=${mensagem}`;
-
+  
           }, function (error) {
             alert("Erro ao obter localização: " + error.message);
-            form.submit();
+            form.submit(); // ainda envia mesmo sem localização
           });
         } else {
           alert("Seu navegador não suporta geolocalização.");
@@ -202,4 +167,4 @@
     });
   </script>
 </body>
-</html>
+          </html>
