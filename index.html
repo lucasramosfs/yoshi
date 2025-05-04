@@ -21,6 +21,11 @@
       /* box-shadow: 0 0 10px #ccc; */
       box-shadow: 0 0 15px springgreen;
     }
+    .container p{
+      text-align: justify;
+      font-size: 1rem;
+
+    }
     img {
       max-width: 170px;
       max-height: 250px;
@@ -71,6 +76,18 @@
     }
     button:hover{
       background-color: #45a049;
+    }
+    .whatsapp {
+      margin-top: 15px;
+      text-align: center;
+    }
+    .whatsapp a {
+      text-decoration: none;
+      color: white;
+      background: #25D366;
+      padding: 10px 20px;
+      border-radius: 5px;
+      display: inline-block;
     }
     .tutores a {
       color: mediumslateblue;
@@ -132,8 +149,9 @@
     <p><em>Estou perdido e com medo, poderia me ajudar a voltar para casa? 🏠💚</em></p>
     <p><em>Basta preencher o formulário abaixo e enviar, meus pais vão receber a mensagem.</em></p>
     <p class="tutores">
-      Meus pais são: <strong>Lucas e Vitória</strong><br>
-      Telefones: <a href="https://wa.me/5511971359990" target="_blank">(11) 9 7135-9990 </a> e <a href="https://wa.me/5511995175534" target="_blank">(11) 9 9517-5534</a>
+      Meus pais são:<br> 
+      <strong>Lucas: </strong><a href="https://wa.me/5511971359990" target="_blank">(11) 9 7135-9990</a><br><br>
+      <strong>Vitória: </strong><a href="https://wa.me/5511995175534" target="_blank">(11) 9 9517-5534</a>
     </p>
 
     <form id="encontrou-form" action="https://formsubmit.co/lucasramosfs@outlook.com.br" method="POST" target="hidden_iframe">
@@ -152,6 +170,9 @@
       <button type="submit">Enviar informações</button>
     </form>
     <iframe name="hidden_iframe" style="display:none;"></iframe>
+    <div class="whatsapp">
+      <a href="https://wa.me/5511971359990" target="_blank">📱 Falar com os pais pelo WhatsApp</a>
+    </div>
   </div>
 
   <!-- Tela de carregamento / agradecimento -->
