@@ -4,6 +4,7 @@
   <meta charset="UTF-8">
   <title>Encontrei o Yoshi!</title>
   <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
   <style>
     body {
       font-family: Arial, sans-serif;
@@ -90,13 +91,22 @@
       display: inline-block;
     }
     .tutores a {
+      text-decoration: none;
       color: mediumslateblue;
     }
     .tutores a:hover {
-      text-decoration: underline;
+      text-decoration: none;
       font-weight: bold;
+      font-size: 1.2rem;
     }
-
+    .fa-whatsapp{
+      margin-right: 10px;
+      color: #25D366;
+    }
+    .fa-phone{
+      color: #424242;
+      font-weight: opacity ;
+    }
     #loading-overlay {
       position: fixed;
       top: 0;
@@ -148,10 +158,29 @@
     <img src="./src/images/yoshi.jpg" alt="Foto do gato">
     <p>Estou perdido e com medo, poderia me ajudar a voltar para casa? 🏠💚</p>
     <p>Basta preencher o formulário abaixo e enviar, meus pais vão receber a mensagem.</p>
-    <p class="tutores">
+    <p class="tutores lucas" >
       Meus pais são:<br> 
-      <strong>Lucas: </strong><a href="tel:+5511971359990" target="_blank">(11) 9 7135-9990</a><br>
-      <strong>Vitória: </strong><a href="tel:+5511995175534" target="_blank">(11) 9 9517-5534</a>
+
+      <strong>Lucas: </strong>
+      <a href="https://wa.me/5511971359990" target="_blank">
+        <i class="fab fa-whatsapp"></i> 
+      </a>
+
+      <!-- Link para ligar -->
+      <a href="tel:+5511971359990">
+        <i class="fas fa-phone"></i> 
+      </a>
+      </p>
+      <p class="tutores vitoria">
+      <strong>Vitória: </strong>
+      <a href="https://wa.me/5511995175534" target="_blank">
+        <i class="fab fa-whatsapp"></i>
+      </a>
+
+      <!-- Link para ligar -->
+      <a href="tel:+5511995175534">
+        <i class="fas fa-phone"></i>
+      </a>
     </p>
 
     <form id="encontrou-form" action="https://formsubmit.co/lucasramosfs@outlook.com.br" method="POST" target="hidden_iframe">
@@ -170,9 +199,6 @@
       <button type="submit">Enviar informações</button>
     </form>
     <iframe name="hidden_iframe" style="display:none;"></iframe>
-    <div class="whatsapp">
-      <a href="https://wa.me/5511971359990" target="_blank">📱 Falar com os pais pelo WhatsApp</a>
-    </div>
   </div>
 
   <!-- Tela de carregamento / agradecimento -->
