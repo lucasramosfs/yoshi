@@ -8,7 +8,8 @@
     body {
       font-family: Arial, sans-serif;
       padding: 20px;
-      background-color: #fefefe;
+      /* background-color: aquamarine; */
+      background-color: rgba(127, 255, 212, 0.6);
       color: #333;
     }
     .container {
@@ -17,13 +18,18 @@
       background: #f9f9f9;
       border-radius: 10px;
       padding: 20px;
-      box-shadow: 0 0 10px #ccc;
+      /* box-shadow: 0 0 10px #ccc; */
+      box-shadow: 0 0 15px springgreen;
     }
     img {
-      max-width: 100%;
+      max-width: 170px;
+      max-height: 250px;
+      object-fit: cover;
       border-radius: 10px;
+      display: block;
+      margin: 0 auto 10px auto;
     }
-    h1 {
+    h1, h2 {
       text-align: center;
       color: #444;
     }
@@ -32,40 +38,33 @@
       font-size: 1rem;
     }
     form {
-      margin: 20px auto;           /* Centraliza o formulário na página */
-      padding: 20px;               /* Espaço interno */
-      /* border: 1px solid red;       Borda de debug */
-      max-width: 100%;            /* Largura máxima */
-      background-color: #fefefe;   /* Cor de fundo clara */
+      margin: 20px auto;
+      padding: 20px;
+      max-width: 100%;
+      background-color: #fefefe;
       border-radius: 8px;
       box-sizing: border-box;
     }
-
     label {
       display: block;
       margin-top: 10px;
       margin-bottom: 5px;
-      /* border: 1px solid red;       Debug */
       font-weight: bold;
     }
-
     input, textarea {
       width: 100%;
       padding: 8px 5px;
       margin-top: 4px;
       border-radius: 5px;
-      /* border: 3px solid red;       Debug */
-      box-sizing: border-box;      /* Impede que padding extrapole largura */
+      box-sizing: border-box;
       font-size: 1rem;
     }
-
     button {
       margin-top: 15px;
       padding: 10px;
       width: 100%;
       background-color: #4CAF50;
       color: white;
-      /* border: 1px solid red;       Debug */
       border-radius: 5px;
       font-size: 1rem;
       cursor: pointer;
@@ -73,41 +72,28 @@
     button:hover{
       background-color: #45a049;
     }
-    .whatsapp {
-      margin-top: 15px;
-      text-align: center;
+    .tutores a {
+      color: mediumslateblue;
     }
-    .whatsapp a {
-      text-decoration: none;
-      color: white;
-      background: #25D366;
-      padding: 10px 20px;
-      border-radius: 5px;
-      display: inline-block;
-    }
-    .tutores a{
-      text-decoration: none;
-      color: #4CAF50;
-    }
-    .tutores a:hover{
+    .tutores a:hover {
       text-decoration: underline;
       font-weight: bold;
     }
 
-    /* Véu de carregamento */
     #loading-overlay {
       position: fixed;
       top: 0;
       left: 0;
       width: 100%;
       height: 100%;
-      background-color: rgba(255, 255, 255, 0.8);
+      background-color: rgba(255, 255, 255, 0.95);
       z-index: 9999;
       display: none;
       align-items: center;
       justify-content: center;
+      flex-direction: column;
+      text-align: center;
     }
-
     .spinner {
       border: 8px solid #f3f3f3;
       border-top: 8px solid #4CAF50;
@@ -115,21 +101,38 @@
       width: 60px;
       height: 60px;
       animation: spin 1s linear infinite;
+      margin-bottom: 20px;
     }
-
     @keyframes spin {
       0% { transform: rotate(0deg); }
       100% { transform: rotate(360deg); }
     }
+
+    #thank-you-message {
+      display: none;
+      text-align: center;
+      padding: 40px;
+      background-color: #e7f9ee;
+      border-radius: 10px;
+      box-shadow: 0 0 10px #ccc;
+    }
+    #thank-you-message h2 {
+      color: #2e7d32;
+    }
+    #thank-you-message p {
+      font-size: 1.1rem;
+    }
   </style>
 </head>
 <body>
-  <div class="container">
-    <h1>Oi! Eu sou o <strong>Yoshi</strong> 🐾</h1>
+  <div class="container" id="form-container">
+    <h1>Olá! Eu sou o <strong>Yoshi</strong> 🐾</h1>
+    <h2>Que bom que me encontrou!</h2>
     <img src="./src/images/yoshi.jpg" alt="Foto do gato">
-    <p><em>Que bom que me encontrou! Obrigado por cuidar de mim até eu voltar pra casa 🏠💚</em></p>
+    <p><em>Estou perdido e com medo, poderia me ajudar a voltar para casa? 🏠💚</em></p>
+    <p><em>Basta preencher o formulário abaixo e enviar, meus pais vão receber a mensagem.</em></p>
     <p class="tutores">
-      Meus tutores são: <strong>Lucas e Vitória</strong><br>
+      Meus pais são: <strong>Lucas e Vitória</strong><br>
       Telefones: <a href="https://wa.me/5511971359990" target="_blank">(11) 9 7135-9990 </a> e <a href="https://wa.me/5511995175534" target="_blank">(11) 9 9517-5534</a>
     </p>
 
@@ -149,51 +152,72 @@
       <button type="submit">Enviar informações</button>
     </form>
     <iframe name="hidden_iframe" style="display:none;"></iframe>
-
-    <div class="whatsapp">
-      <a href="https://wa.me/5511971359990" target="_blank">📱 Falar com os tutores pelo WhatsApp</a>
-    </div>
   </div>
 
-  <!-- Véu de carregamento -->
+  <!-- Tela de carregamento / agradecimento -->
   <div id="loading-overlay">
     <div class="spinner"></div>
+    <p>Enviando suas informações...</p>
+  </div>
+
+  <div class="container" id="thank-you-message">
+    <h2>Obrigado por ajudar o Yoshi! 🐱💚</h2>
+    <p>Suas informações foram enviadas com sucesso aos tutores.</p>
+    <p>Você também pode avisá-los diretamente pelo WhatsApp:</p>
+    <a href="https://wa.me/5511971359990" target="_blank" style="background:#25D366; color:white; padding:10px 20px; border-radius:5px; display:inline-block; margin-top:10px;">Chamar no WhatsApp</a>
   </div>
 
   <script>
     document.addEventListener("DOMContentLoaded", function () {
       const form = document.getElementById("encontrou-form");
-
+  
       form.addEventListener("submit", function (event) {
         event.preventDefault();
-
+  
         document.getElementById("loading-overlay").style.display = "flex";
-
+  
         const nome = document.getElementById("nome").value;
         const tel = document.getElementById("telefone").value;
         const comentario = document.getElementById("comentario").value;
         const numero = "5511971359990";
-
+  
         if (navigator.geolocation) {
-          navigator.geolocation.getCurrentPosition(function (position) {
-            const latitude = position.coords.latitude;
-            const longitude = position.coords.longitude;
-            const mapsLink = `https://www.google.com/maps?q=${latitude},${longitude}`;
-            document.getElementById("localizacao").value = mapsLink;
-
-            const mensagem = encodeURIComponent(
-              `Olá! Encontrei o Yoshi \n\n` +
-              `Meu nome: ${nome}\nMeu telefone: ${tel}\nComentário: ${comentario}\n\n` +
-              `Localização:\n${mapsLink}`
-            );
-
-            form.submit();
-            window.location.href = `https://wa.me/${numero}?text=${mensagem}`;
-
-          }, function (error) {
-            alert("Erro ao obter localização: " + error.message);
-            form.submit();
-          });
+          navigator.geolocation.getCurrentPosition(
+            function (position) {
+              const latitude = position.coords.latitude;
+              const longitude = position.coords.longitude;
+              const mapsLink = `https://www.google.com/maps?q=${latitude},${longitude}`;
+              document.getElementById("localizacao").value = mapsLink;
+  
+              const mensagem = encodeURIComponent(
+                `Olá! Encontrei o Yoshi 🐱\n\n` +
+                `Meu nome: ${nome}\n` +
+                `Meu telefone: ${tel}\n` +
+                `Comentário: ${comentario}\n\n` +
+                `Localização exata:\n${mapsLink}`
+              );
+  
+              // Envia o formulário
+              form.submit();
+  
+              // Aguarda 2.5s e abre o WhatsApp
+              setTimeout(() => {
+                document.getElementById("loading-overlay").style.display = "none";
+                document.getElementById("form-container").style.display = "none";
+                document.getElementById("thank-you-message").style.display = "block";
+                window.open(`https://wa.me/${numero}?text=${mensagem}`, '_blank');
+              }, 2500);
+            },
+            function (error) {
+              alert("Erro ao obter localização: " + error.message);
+              form.submit();
+            },
+            {
+              enableHighAccuracy: true, // localização precisa
+              timeout: 10000,
+              maximumAge: 0
+            }
+          );
         } else {
           alert("Seu navegador não suporta geolocalização.");
           form.submit();
@@ -201,5 +225,6 @@
       });
     });
   </script>
+  
 </body>
 </html>
